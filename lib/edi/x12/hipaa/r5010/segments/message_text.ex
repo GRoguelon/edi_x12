@@ -5,7 +5,7 @@ defmodule Edi.X12.Hipaa.R5010.Segments.MessageText do
   To provide a free-form format that allows the transmission of text information
   """
 
-  use Edi.X12.Parser
+  use Edi.X12.Parser, parser: :segment
 
   import NimbleParsec
 
@@ -76,10 +76,7 @@ defmodule Edi.X12.Hipaa.R5010.Segments.MessageText do
     |> optional(
       ignore(string(@element_seperator))
       |> unwrap_and_tag(
-        map(
-          ascii_string([?-], min: 0, max: 1) |> ascii_string([?0..?9, ?., ?|], min: 0, max: 9),
-          {Parser, :number2, [0]}
-        ),
+        map(ascii_string([?-, ?0..?9, ?., ?|], min: 0, max: 9), {Parser, :number2, [0]}),
         :number
       )
     )
@@ -88,5 +85,5 @@ defmodule Edi.X12.Hipaa.R5010.Segments.MessageText do
     |> ignore(string(@segment_terminator))
 
   @doc false
-  defparsec(:parse, combinator, export_combinator: false, inline: Mix.env() == :prod)
+  defparsec(:segment, combinator, export_combinator: true, inline: Mix.env() == :prod)
 end

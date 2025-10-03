@@ -3,27 +3,61 @@ defmodule Edi.X12.Parser do
 
   ## Public macros
 
-  defmacro __using__(_env) do
+  defmacro __using__(opts) do
+    function = Keyword.fetch!(opts, :parser)
+
     quote do
       @doc """
       Parse the `value` and create a struct.
 
       ### Examples
 
-          iex> new("XX*Y*ZZ~")
-          %Struct{
-            elem_1: "Y",
-            elem_2: "ZZ"
-          }
+          iex> parse("XX*Y*ZZ~")
+          {:ok, %Struct{elem_1: "Y", elem_2: "ZZ"}}
       """
-      @spec new(binary()) :: {:ok, t()} | {:error, binary(), binary()}
-      def new(value) when is_binary(value) do
-        case parse(value) do
+      @spec parse(binary()) :: {:ok, t()} | {:error, binary(), binary()}
+      def parse(value) when is_binary(value) do
+        case unquote(function)(value) do
           {:ok, result, "", _, _, _} ->
             {:ok, struct!(__MODULE__, result)}
 
           {:error, error, rest, _, _, _} ->
             {:error, error, rest}
+        end
+      end
+
+      @doc """
+      Convert the `list` into a struct.
+
+      ### Examples
+
+          iex> parse(elem_1: "Y", elem_2: "ZZ")
+          {:ok, %Struct{elem_1: "Y", elem_2: "ZZ"}}
+      """
+      @spec parse(keyword() | map()) :: {:ok, t()} | {:error, binary(), binary()}
+      def parse(list) when is_list(list) or is_map(list) do
+        {:ok, struct!(__MODULE__, list)}
+      end
+
+      @doc """
+      Convert the `list` into a struct.
+
+      ### Examples
+
+          iex> parse!(elem_1: "Y", elem_2: "ZZ")
+          %Struct{
+            elem_1: "Y",
+            elem_2: "ZZ"
+          }
+      """
+      @spec parse!(keyword() | map()) :: t()
+      def parse!(list) do
+        case(parse(list)) do
+          {:ok, result} ->
+            result
+
+          {:error, error} ->
+            raise error
         end
       end
     end
@@ -84,6 +118,21 @@ defmodule Edi.X12.Parser do
     end
   end
 
+  def identifier(value, values) when is_binary(value) and value != "" and values == %{} do
+    value
+    |> String.split("|")
+    |> Enum.map(fn item ->
+      %Edi.X12.Identifier{code: item, value: item}
+    end)
+    |> case do
+      [item] ->
+        item
+
+      items ->
+        items
+    end
+  end
+
   def identifier(value, values) when is_binary(value) and value != "" do
     case String.split(value, "|") do
       [item] ->
@@ -113,9 +162,12 @@ defmodule Edi.X12.Parser do
     end
   end
 
+  def number2("", _scale), do: nil
+
   def number2(values, scale) do
-    value = Enum.join(values)
-    {integer, ""} = Integer.parse(value)
+    IO.inspect({values, scale})
+    {integer, ""} = Integer.parse(values)
+    IO.inspect(integer)
 
     if scale > 0 do
       Float.round(integer / Integer.pow(10, scale), scale)
@@ -135,14 +187,11 @@ defmodule Edi.X12.Parser do
     float
   end
 
-  def decimal2(values) do
-    value = Enum.join(values)
+  def decimal2(value) when is_binary(value) and value != "" do
     {float, ""} = Float.parse(value)
 
     float
   end
 
-  def char(codepoint) do
-    List.to_string([codepoint])
-  end
+  def decimal2(_values), do: nil
 end

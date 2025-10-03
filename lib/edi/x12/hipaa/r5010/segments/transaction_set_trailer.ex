@@ -5,7 +5,7 @@ defmodule Edi.X12.Hipaa.R5010.Segments.TransactionSetTrailer do
   To indicate the end of the transaction set and provide the count of the transmitted segments (including the beginning (ST) and ending (SE) segments)
   """
 
-  use Edi.X12.Parser
+  use Edi.X12.Parser, parser: :segment
 
   import NimbleParsec
 
@@ -46,10 +46,7 @@ defmodule Edi.X12.Hipaa.R5010.Segments.TransactionSetTrailer do
     # Parse element (96 - Number of Included Segments) and tag as: :number_of_included_segments
     |> ignore(string(@element_seperator))
     |> unwrap_and_tag(
-      map(
-        ascii_string([?-], min: 0, max: 1) |> ascii_string([?0..?9, ?., ?|], min: 1, max: 10),
-        {Parser, :number2, [0]}
-      ),
+      map(ascii_string([?-, ?0..?9, ?., ?|], min: 1, max: 10), {Parser, :number2, [0]}),
       :number_of_included_segments
     )
 
@@ -64,5 +61,5 @@ defmodule Edi.X12.Hipaa.R5010.Segments.TransactionSetTrailer do
     |> ignore(string(@segment_terminator))
 
   @doc false
-  defparsec(:parse, combinator, export_combinator: false, inline: Mix.env() == :prod)
+  defparsec(:segment, combinator, export_combinator: true, inline: Mix.env() == :prod)
 end

@@ -5,7 +5,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeDiagnosisCodePointer do
   To identify one or more diagnosis code pointers
   """
 
-  use Edi.X12.Parser
+  use Edi.X12.Parser, parser: :element
 
   import NimbleParsec
 
@@ -50,10 +50,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeDiagnosisCodePointer do
 
     # Parse element (1328 - Diagnosis Code Pointer) and tag as: :diagnosis_code_pointer_1
     |> unwrap_and_tag(
-      map(
-        ascii_string([?-], min: 0, max: 1) |> ascii_string([?0..?9, ?., ?|], min: 1, max: 2),
-        {Parser, :number2, [0]}
-      ),
+      map(ascii_string([?-, ?0..?9, ?., ?|], min: 1, max: 2), {Parser, :number2, [0]}),
       :diagnosis_code_pointer_1
     )
 
@@ -61,10 +58,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeDiagnosisCodePointer do
     |> optional(
       ignore(string(@element_seperator))
       |> unwrap_and_tag(
-        map(
-          ascii_string([?-], min: 0, max: 1) |> ascii_string([?0..?9, ?., ?|], min: 0, max: 2),
-          {Parser, :number2, [0]}
-        ),
+        map(ascii_string([?-, ?0..?9, ?., ?|], min: 0, max: 2), {Parser, :number2, [0]}),
         :diagnosis_code_pointer_2
       )
     )
@@ -73,10 +67,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeDiagnosisCodePointer do
     |> optional(
       ignore(string(@element_seperator))
       |> unwrap_and_tag(
-        map(
-          ascii_string([?-], min: 0, max: 1) |> ascii_string([?0..?9, ?., ?|], min: 0, max: 2),
-          {Parser, :number2, [0]}
-        ),
+        map(ascii_string([?-, ?0..?9, ?., ?|], min: 0, max: 2), {Parser, :number2, [0]}),
         :diagnosis_code_pointer_3
       )
     )
@@ -85,14 +76,11 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeDiagnosisCodePointer do
     |> optional(
       ignore(string(@element_seperator))
       |> unwrap_and_tag(
-        map(
-          ascii_string([?-], min: 0, max: 1) |> ascii_string([?0..?9, ?., ?|], min: 0, max: 2),
-          {Parser, :number2, [0]}
-        ),
+        map(ascii_string([?-, ?0..?9, ?., ?|], min: 0, max: 2), {Parser, :number2, [0]}),
         :diagnosis_code_pointer_4
       )
     )
 
   @doc false
-  defparsec(:parse, combinator, export_combinator: false, inline: Mix.env() == :prod)
+  defparsec(:element, combinator, export_combinator: true, inline: Mix.env() == :prod)
 end

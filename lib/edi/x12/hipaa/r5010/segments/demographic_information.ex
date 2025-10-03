@@ -5,7 +5,7 @@ defmodule Edi.X12.Hipaa.R5010.Segments.DemographicInformation do
   To supply demographic information
   """
 
-  use Edi.X12.Parser
+  use Edi.X12.Parser, parser: :segment
 
   import NimbleParsec
 
@@ -246,5 +246,5 @@ defmodule Edi.X12.Hipaa.R5010.Segments.DemographicInformation do
     |> ignore(string(@segment_terminator))
 
   @doc false
-  defparsec(:parse, combinator, export_combinator: false, inline: Mix.env() == :prod)
+  defparsec(:segment, combinator, export_combinator: true, inline: Mix.env() == :prod)
 end
