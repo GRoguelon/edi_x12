@@ -1,6 +1,11 @@
 # Changelog
 
-## Unreleased
+## v0.1.2 (Unreleased)
+
+### Bug fixes
+
+* Removed `IO.inspect/1` from the code
+* Fix Dialyzer errors
 
 ## v0.1.1 (2025-10-03)
 

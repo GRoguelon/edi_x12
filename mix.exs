@@ -2,7 +2,7 @@ defmodule EdiX12.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/GRoguelon/edi_x12"
-  @version "0.1.1"
+  @version "0.1.2"
 
   def project do
     [
@@ -49,7 +49,7 @@ defmodule EdiX12.MixProject do
     [
       formatters: ["html"],
       main: "readme",
-      extras: ["README.md", "CHANGELOG.md"],
+      extras: ["README.md", "CHANGELOG.md", "LICENSE"],
       source_ref: "v#{@version}",
       source_url: @source_url,
       skip_undefined_reference_warnings_on: ["CHANGELOG.md"],
@@ -89,6 +89,9 @@ defmodule EdiX12.MixProject do
           Edi.X12.Hipaa.R5010.Segments.Trace,
           Edi.X12.Hipaa.R5010.Segments.TransactionSetHeader,
           Edi.X12.Hipaa.R5010.Segments.TransactionSetTrailer
+        ],
+        "Transaction Sets": [
+          Edi.X12.Hipaa.R5010.TransactionSets.HealthCareEligibilityBenefitResponse
         ]
       ]
     ]

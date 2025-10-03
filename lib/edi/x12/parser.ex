@@ -52,11 +52,11 @@ defmodule Edi.X12.Parser do
       """
       @spec parse!(keyword() | map()) :: t()
       def parse!(list) do
-        case(parse(list)) do
+        case parse(list) do
           {:ok, result} ->
             result
 
-          {:error, error} ->
+          {:error, error, _rest} ->
             raise error
         end
       end
@@ -165,9 +165,7 @@ defmodule Edi.X12.Parser do
   def number2("", _scale), do: nil
 
   def number2(values, scale) do
-    IO.inspect({values, scale})
     {integer, ""} = Integer.parse(values)
-    IO.inspect(integer)
 
     if scale > 0 do
       Float.round(integer / Integer.pow(10, scale), scale)
