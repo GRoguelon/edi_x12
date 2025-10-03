@@ -1,0 +1,22 @@
+{
+  "A": "Air Force",
+  "B": "Air Force Reserves",
+  "C": "Army",
+  "D": "Army Reserves",
+  "E": "Coast Guard",
+  "F": "Marine Corps",
+  "G": "Marine Corps Reserves",
+  "H": "National Guard",
+  "I": "Navy",
+  "J": "Navy Reserves",
+  "K": "Other",
+  "L": "Peace Corp",
+  "M": "Regular Armed Forces",
+  "N": "Reserves",
+  "O": "U.S. Public Health Service",
+  "Q": "Foreign Military",
+  "R": "American Red Cross",
+  "S": "Department of Defense",
+  "U": "United Services Organization",
+  "W": "Military Sealift Command"
+}

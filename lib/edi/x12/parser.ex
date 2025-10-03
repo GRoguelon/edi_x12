@@ -5,7 +5,18 @@ defmodule Edi.X12.Parser do
 
   defmacro __using__(_env) do
     quote do
-      @spec new(binary()) :: {:ok, t()}
+      @doc """
+      Parse the `value` and create a struct.
+
+      ### Examples
+
+          iex> new("XX*Y*ZZ~")
+          %Struct{
+            elem_1: "Y",
+            elem_2: "ZZ"
+          }
+      """
+      @spec new(binary()) :: {:ok, t()} | {:error, binary(), binary()}
       def new(value) when is_binary(value) do
         case parse(value) do
           {:ok, result, "", _, _, _} ->

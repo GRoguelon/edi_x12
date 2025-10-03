@@ -8,7 +8,7 @@ defmodule EdiX12.MixProject do
     [
       app: :edi_x12,
       version: @version,
-      elixir: "~> 1.12",
+      elixir: "~> 1.15",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -52,7 +52,45 @@ defmodule EdiX12.MixProject do
       extras: ["README.md", "CHANGELOG.md"],
       source_ref: "v#{@version}",
       source_url: @source_url,
-      skip_undefined_reference_warnings_on: ["CHANGELOG.md"]
+      skip_undefined_reference_warnings_on: ["CHANGELOG.md"],
+      nest_modules_by_prefix: [Edi.X12.Hipaa.R5010],
+      groups_for_modules: [
+        Elements: [
+          Edi.X12.Hipaa.R5010.Elements.CompositeDiagnosisCodePointer,
+          Edi.X12.Hipaa.R5010.Elements.CompositeMedicalProcedureIdentifier,
+          Edi.X12.Hipaa.R5010.Elements.CompositeRaceOrEthnicityInformation,
+          Edi.X12.Hipaa.R5010.Elements.CompositeUnitOfMeasure,
+          Edi.X12.Hipaa.R5010.Elements.HealthCareCodeInformation,
+          Edi.X12.Hipaa.R5010.Elements.MedicareStatusCode,
+          Edi.X12.Hipaa.R5010.Elements.ProviderSpecialtyInformation,
+          Edi.X12.Hipaa.R5010.Elements.ReferenceIdentifier
+        ],
+        Segments: [
+          Edi.X12.Hipaa.R5010.Segments.AdministrativeCommunicationsContact,
+          Edi.X12.Hipaa.R5010.Segments.BeginningOfHierarchicalTransaction,
+          Edi.X12.Hipaa.R5010.Segments.DateOrTimeOrPeriod,
+          Edi.X12.Hipaa.R5010.Segments.DemographicInformation,
+          Edi.X12.Hipaa.R5010.Segments.EligibilityOrBenefitInformation,
+          Edi.X12.Hipaa.R5010.Segments.GeographicLocation,
+          Edi.X12.Hipaa.R5010.Segments.HealthCareInformationCodes,
+          Edi.X12.Hipaa.R5010.Segments.HealthCareServicesDelivery,
+          Edi.X12.Hipaa.R5010.Segments.HierarchicalLevel,
+          Edi.X12.Hipaa.R5010.Segments.IndividualOrOrganizationalName,
+          Edi.X12.Hipaa.R5010.Segments.Information,
+          Edi.X12.Hipaa.R5010.Segments.InsuredBenefit,
+          Edi.X12.Hipaa.R5010.Segments.LoopHeader,
+          Edi.X12.Hipaa.R5010.Segments.LoopTrailer,
+          Edi.X12.Hipaa.R5010.Segments.MessageText,
+          Edi.X12.Hipaa.R5010.Segments.MilitaryPersonnelInformation,
+          Edi.X12.Hipaa.R5010.Segments.PartyLocation,
+          Edi.X12.Hipaa.R5010.Segments.ProviderInformation,
+          Edi.X12.Hipaa.R5010.Segments.ReferenceInformation,
+          Edi.X12.Hipaa.R5010.Segments.RequestValidation,
+          Edi.X12.Hipaa.R5010.Segments.Trace,
+          Edi.X12.Hipaa.R5010.Segments.TransactionSetHeader,
+          Edi.X12.Hipaa.R5010.Segments.TransactionSetTrailer
+        ]
+      ]
     ]
   end
 
@@ -65,6 +103,7 @@ defmodule EdiX12.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:jason, "~> 1.4"},
       {:nimble_parsec, "~> 1.4"},
 
       ## Dev dependencies

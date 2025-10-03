@@ -1,0 +1,22 @@
+{
+  "1": "Birth Certificate",
+  "2": "Passport",
+  "3": "Hospital Certificate",
+  "4": "Affidavit",
+  "5": "Immigration Document",
+  "6": "Baptismal or Church Certificate",
+  "7": "Physician's Certificate",
+  "8": "Undocumented",
+  "9": "Driver's License",
+  "A": "Photo ID",
+  "B": "Social Insurance Certificate",
+  "C": "US Passport",
+  "D": "Certificate of US Citizenship",
+  "E": "Certificate of Naturalization",
+  "F": "Unexpired Foreign Passport with Stamp or Attached Immigration and Naturalization Service (INS) Form Indicating Unexpired Employment Authorization",
+  "G": "Alien Registration Receipt Card with Photograph",
+  "H": "Unexpired Temporary Resident Card",
+  "I": "Unexpired Employment Authorization Card",
+  "J": "Unexpired Reentry Permit",
+  "K": "Unexpired Refugee Travel Document"
+}
