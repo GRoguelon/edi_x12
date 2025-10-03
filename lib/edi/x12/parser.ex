@@ -15,14 +15,17 @@ defmodule Edi.X12.Parser do
           iex> parse("XX*Y*ZZ~")
           {:ok, %Struct{elem_1: "Y", elem_2: "ZZ"}}
       """
-      @spec parse(binary()) :: {:ok, t()} | {:error, binary(), binary()}
+      @spec parse(binary()) :: {:ok, t()} | {:error, binary()}
       def parse(value) when is_binary(value) do
         case unquote(function)(value) do
           {:ok, result, "", _, _, _} ->
             {:ok, struct!(__MODULE__, result)}
 
-          {:error, error, rest, _, _, _} ->
-            {:error, error, rest}
+          {:ok, _result, rest, _, _, _} when rest != "" ->
+            {:error, "incomplete parse, remaining: #{rest}"}
+
+          other ->
+            {:error, "unexpected parser result: #{inspect(other)}"}
         end
       end
 
@@ -34,9 +37,12 @@ defmodule Edi.X12.Parser do
           iex> parse(elem_1: "Y", elem_2: "ZZ")
           {:ok, %Struct{elem_1: "Y", elem_2: "ZZ"}}
       """
-      @spec parse(keyword() | map()) :: {:ok, t()} | {:error, binary(), binary()}
+      @spec parse(keyword() | map()) :: {:ok, t()} | {:error, binary()}
       def parse(list) when is_list(list) or is_map(list) do
         {:ok, struct!(__MODULE__, list)}
+      rescue
+        e in ArgumentError ->
+          {:error, Exception.message(e)}
       end
 
       @doc """
@@ -56,7 +62,7 @@ defmodule Edi.X12.Parser do
           {:ok, result} ->
             result
 
-          {:error, error, _rest} ->
+          {:error, error} ->
             raise error
         end
       end
