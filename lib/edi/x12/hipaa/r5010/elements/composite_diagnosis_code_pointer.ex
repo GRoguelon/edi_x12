@@ -49,9 +49,11 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeDiagnosisCodePointer do
     empty()
 
     # Parse element (1328 - Diagnosis Code Pointer) and tag as: :diagnosis_code_pointer_1
-    |> unwrap_and_tag(
-      map(ascii_string([?-, ?0..?9, ?., ?|], min: 1, max: 2), {Parser, :number2, [0]}),
-      :diagnosis_code_pointer_1
+    |> optional(
+      unwrap_and_tag(
+        map(ascii_string([?-, ?0..?9, ?., ?|], min: 1, max: 2), {Parser, :number2, [0]}),
+        :diagnosis_code_pointer_1
+      )
     )
 
     # Parse element (1328 - Diagnosis Code Pointer) and tag as: :diagnosis_code_pointer_2

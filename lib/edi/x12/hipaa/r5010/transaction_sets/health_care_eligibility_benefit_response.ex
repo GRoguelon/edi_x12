@@ -17,6 +17,17 @@ defmodule Edi.X12.Hipaa.R5010.TransactionSets.HealthCareEligibilityBenefitRespon
 
   combinator =
     empty()
+    # Parse
+    |> map(
+      wrap(parsec({Segments.InterchangeControlHeader, :segment})),
+      {Segments.InterchangeControlHeader, :parse!, []}
+    )
+    |> ignore(optional(string("\n")))
+    |> map(
+      wrap(parsec({Segments.FunctionalGroupHeader, :segment})),
+      {Segments.FunctionalGroupHeader, :parse!, []}
+    )
+    |> ignore(optional(string("\n")))
     # Parse the segment ST - Transaction Set Header
     |> map(
       wrap(parsec({Segments.TransactionSetHeader, :segment})),
@@ -735,6 +746,16 @@ defmodule Edi.X12.Hipaa.R5010.TransactionSets.HealthCareEligibilityBenefitRespon
       {Segments.TransactionSetTrailer, :parse!, []}
     )
     |> ignore(optional(string("\n")))
+    |> map(
+      wrap(parsec({Segments.FunctionalGroupTrailer, :segment})),
+      {Segments.FunctionalGroupTrailer, :parse!, []}
+    )
+    |> ignore(optional(string("\n")))
+    |> map(
+      wrap(parsec({Segments.InterchangeControlTrailer, :segment})),
+      {Segments.InterchangeControlTrailer, :parse!, []}
+    )
+    |> ignore(optional(string("\n")))
 
   @doc false
   defparsec(:transaction_set, combinator, export_combinator: false, inline: Mix.env() == :prod)
@@ -772,6 +793,14 @@ defmodule Edi.X12.Hipaa.R5010.TransactionSets.HealthCareEligibilityBenefitRespon
     Segments.EligibilityOrBenefitInformation.parse(segment)
   end
 
+  def parse_segment(<<"GE", _::binary>> = segment) do
+    Segments.FunctionalGroupTrailer.parse(segment)
+  end
+
+  def parse_segment(<<"GS", _::binary>> = segment) do
+    Segments.FunctionalGroupHeader.parse(segment)
+  end
+
   def parse_segment(<<"HI", _::binary>> = segment) do
     Segments.HealthCareInformationCodes.parse(segment)
   end
@@ -784,12 +813,20 @@ defmodule Edi.X12.Hipaa.R5010.TransactionSets.HealthCareEligibilityBenefitRespon
     Segments.HealthCareServicesDelivery.parse(segment)
   end
 
+  def parse_segment(<<"IEA", _::binary>> = segment) do
+    Segments.InterchangeControlTrailer.parse(segment)
+  end
+
   def parse_segment(<<"III", _::binary>> = segment) do
     Segments.Information.parse(segment)
   end
 
   def parse_segment(<<"INS", _::binary>> = segment) do
     Segments.InsuredBenefit.parse(segment)
+  end
+
+  def parse_segment(<<"ISA", _::binary>> = segment) do
+    Segments.InterchangeControlHeader.parse(segment)
   end
 
   def parse_segment(<<"LE", _::binary>> = segment) do

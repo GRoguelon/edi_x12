@@ -53,7 +53,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.ReferenceIdentifier do
   # Load the values for the values for :reference_identification_qualifier_1 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/reference_identification_qualifier_1.json"
+               "priv/element_values/hipaa/r5010/reference_identification_qualifier.json"
              )
   @external_resource @file_path
   @reference_identification_qualifier_1_values @file_path |> File.read!() |> Jason.decode!()
@@ -61,7 +61,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.ReferenceIdentifier do
   # Load the values for the values for :reference_identification_qualifier_2 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/reference_identification_qualifier_2.json"
+               "priv/element_values/hipaa/r5010/reference_identification_qualifier.json"
              )
   @external_resource @file_path
   @reference_identification_qualifier_2_values @file_path |> File.read!() |> Jason.decode!()
@@ -69,7 +69,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.ReferenceIdentifier do
   # Load the values for the values for :reference_identification_qualifier_3 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/reference_identification_qualifier_3.json"
+               "priv/element_values/hipaa/r5010/reference_identification_qualifier.json"
              )
   @external_resource @file_path
   @reference_identification_qualifier_3_values @file_path |> File.read!() |> Jason.decode!()
@@ -80,19 +80,23 @@ defmodule Edi.X12.Hipaa.R5010.Elements.ReferenceIdentifier do
     empty()
 
     # Parse element (128 - Reference Identification Qualifier) and tag as: :reference_identification_qualifier_1
-    |> unwrap_and_tag(
-      map(
-        ascii_string([?0..?9, ?A..?Z, ?|], min: 2, max: 3),
-        {Parser, :identifier, [@reference_identification_qualifier_1_values]}
-      ),
-      :reference_identification_qualifier_1
+    |> optional(
+      unwrap_and_tag(
+        map(
+          ascii_string([?0..?9, ?A..?Z, ?|], min: 2, max: 3),
+          {Parser, :identifier, [@reference_identification_qualifier_1_values]}
+        ),
+        :reference_identification_qualifier_1
+      )
     )
 
     # Parse element (127 - Reference Identification) and tag as: :reference_identification_1
-    |> ignore(string(@element_seperator))
-    |> unwrap_and_tag(
-      map(ascii_string([not: ?*, not: ?~], min: 1, max: 50), {Parser, :string, []}),
-      :reference_identification_1
+    |> optional(
+      ignore(string(@element_seperator))
+      |> unwrap_and_tag(
+        map(ascii_string([not: ?*, not: ?~], min: 1, max: 50), {Parser, :string, []}),
+        :reference_identification_1
+      )
     )
 
     # Parse element (128 - Reference Identification Qualifier) and tag as: :reference_identification_qualifier_2

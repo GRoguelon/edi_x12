@@ -82,7 +82,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeUnitOfMeasure do
   # Load the values for the values for :unit_or_basis_for_measurement_code_1 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/unit_or_basis_for_measurement_code_1.json"
+               "priv/element_values/hipaa/r5010/unit_or_basis_for_measurement_code.json"
              )
   @external_resource @file_path
   @unit_or_basis_for_measurement_code_1_values @file_path |> File.read!() |> Jason.decode!()
@@ -90,7 +90,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeUnitOfMeasure do
   # Load the values for the values for :unit_or_basis_for_measurement_code_2 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/unit_or_basis_for_measurement_code_2.json"
+               "priv/element_values/hipaa/r5010/unit_or_basis_for_measurement_code.json"
              )
   @external_resource @file_path
   @unit_or_basis_for_measurement_code_2_values @file_path |> File.read!() |> Jason.decode!()
@@ -98,7 +98,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeUnitOfMeasure do
   # Load the values for the values for :unit_or_basis_for_measurement_code_3 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/unit_or_basis_for_measurement_code_3.json"
+               "priv/element_values/hipaa/r5010/unit_or_basis_for_measurement_code.json"
              )
   @external_resource @file_path
   @unit_or_basis_for_measurement_code_3_values @file_path |> File.read!() |> Jason.decode!()
@@ -106,7 +106,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeUnitOfMeasure do
   # Load the values for the values for :unit_or_basis_for_measurement_code_4 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/unit_or_basis_for_measurement_code_4.json"
+               "priv/element_values/hipaa/r5010/unit_or_basis_for_measurement_code.json"
              )
   @external_resource @file_path
   @unit_or_basis_for_measurement_code_4_values @file_path |> File.read!() |> Jason.decode!()
@@ -114,7 +114,7 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeUnitOfMeasure do
   # Load the values for the values for :unit_or_basis_for_measurement_code_5 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/unit_or_basis_for_measurement_code_5.json"
+               "priv/element_values/hipaa/r5010/unit_or_basis_for_measurement_code.json"
              )
   @external_resource @file_path
   @unit_or_basis_for_measurement_code_5_values @file_path |> File.read!() |> Jason.decode!()
@@ -125,12 +125,14 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeUnitOfMeasure do
     empty()
 
     # Parse element (355 - Unit or Basis for Measurement Code) and tag as: :unit_or_basis_for_measurement_code_1
-    |> unwrap_and_tag(
-      map(
-        ascii_string([?0..?9, ?A..?Z, ?|], 2),
-        {Parser, :identifier, [@unit_or_basis_for_measurement_code_1_values]}
-      ),
-      :unit_or_basis_for_measurement_code_1
+    |> optional(
+      unwrap_and_tag(
+        map(
+          ascii_string([?0..?9, ?A..?Z, ?|], 2),
+          {Parser, :identifier, [@unit_or_basis_for_measurement_code_1_values]}
+        ),
+        :unit_or_basis_for_measurement_code_1
+      )
     )
 
     # Parse element (1018 - Exponent) and tag as: :exponent_1

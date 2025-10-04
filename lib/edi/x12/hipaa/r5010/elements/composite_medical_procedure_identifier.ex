@@ -79,10 +79,12 @@ defmodule Edi.X12.Hipaa.R5010.Elements.CompositeMedicalProcedureIdentifier do
     )
 
     # Parse element (234 - Product/Service ID) and tag as: :product_service_id_1
-    |> ignore(string(@element_seperator))
-    |> unwrap_and_tag(
-      map(ascii_string([not: ?*, not: ?~], min: 1, max: 48), {Parser, :string, []}),
-      :product_service_id_1
+    |> optional(
+      ignore(string(@element_seperator))
+      |> unwrap_and_tag(
+        map(ascii_string([not: ?*, not: ?~], min: 1, max: 48), {Parser, :string, []}),
+        :product_service_id_1
+      )
     )
 
     # Parse element (1339 - Procedure Modifier) and tag as: :procedure_modifier_1

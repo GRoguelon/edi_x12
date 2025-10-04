@@ -98,10 +98,12 @@ defmodule Edi.X12.Hipaa.R5010.Elements.HealthCareCodeInformation do
     )
 
     # Parse element (1271 - Industry Code) and tag as: :industry_code_1
-    |> ignore(string(@element_seperator))
-    |> unwrap_and_tag(
-      map(ascii_string([not: ?*, not: ?~], min: 1, max: 30), {Parser, :string, []}),
-      :industry_code_1
+    |> optional(
+      ignore(string(@element_seperator))
+      |> unwrap_and_tag(
+        map(ascii_string([not: ?*, not: ?~], min: 1, max: 30), {Parser, :string, []}),
+        :industry_code_1
+      )
     )
 
     # Parse element (1250 - Date Time Period Format Qualifier) and tag as: :date_time_period_format_qualifier

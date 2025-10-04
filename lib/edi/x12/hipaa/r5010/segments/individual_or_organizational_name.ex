@@ -72,7 +72,7 @@ defmodule Edi.X12.Hipaa.R5010.Segments.IndividualOrOrganizationalName do
   # Load the values for the values for :entity_identifier_code_1 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/entity_identifier_code_1.json"
+               "priv/element_values/hipaa/r5010/entity_identifier_code.json"
              )
   @external_resource @file_path
   @entity_identifier_code_1_values @file_path |> File.read!() |> Jason.decode!()
@@ -104,7 +104,7 @@ defmodule Edi.X12.Hipaa.R5010.Segments.IndividualOrOrganizationalName do
   # Load the values for the values for :entity_identifier_code_2 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/entity_identifier_code_2.json"
+               "priv/element_values/hipaa/r5010/entity_identifier_code.json"
              )
   @external_resource @file_path
   @entity_identifier_code_2_values @file_path |> File.read!() |> Jason.decode!()

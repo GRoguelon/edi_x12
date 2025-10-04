@@ -88,7 +88,7 @@ defmodule Edi.X12.Hipaa.R5010.Segments.InsuredBenefit do
   # Load the values for the values for :yes_no_condition_or_response_code_1 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/yes_no_condition_or_response_code_1.json"
+               "priv/element_values/hipaa/r5010/yes_no_condition_or_response_code.json"
              )
   @external_resource @file_path
   @yes_no_condition_or_response_code_1_values @file_path |> File.read!() |> Jason.decode!()
@@ -154,7 +154,7 @@ defmodule Edi.X12.Hipaa.R5010.Segments.InsuredBenefit do
   # Load the values for the values for :yes_no_condition_or_response_code_2 %>
   @file_path Application.app_dir(
                :edi_x12,
-               "priv/element_values/hipaa/r5010/yes_no_condition_or_response_code_2.json"
+               "priv/element_values/hipaa/r5010/yes_no_condition_or_response_code.json"
              )
   @external_resource @file_path
   @yes_no_condition_or_response_code_2_values @file_path |> File.read!() |> Jason.decode!()
