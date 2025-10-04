@@ -2,7 +2,7 @@ defmodule EdiX12.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/GRoguelon/edi_x12"
-  @version "0.1.3"
+  @version "0.1.4"
 
   def project do
     [
@@ -29,13 +29,13 @@ defmodule EdiX12.MixProject do
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "priv/element_values", "test/support"]
-  defp elixirc_paths(_), do: ["lib", "priv/element_values"]
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp package do
     [
       name: :edi_x12,
-      files: ["lib", "mix.exs"],
+      files: ["lib", "priv/element_values", "mix.exs"],
       maintainers: ["Geoffrey Roguelon"],
       licenses: ["MIT"],
       links: %{
