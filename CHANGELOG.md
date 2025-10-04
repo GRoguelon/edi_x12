@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.3 (2025-10-03)
+
+### Bug fixes
+
+* Included `priv` folder in release
+
 ## v0.1.2 (2025-10-03)
 
 ### Bug fixes
