@@ -24,7 +24,7 @@ EDI X12 is the standard format for electronic business documents in North Americ
 ```elixir
 def deps do
   [
-    {:edi_x12, "~> 0.1.0"}
+    {:edi_x12, "~> 0.1.4"}
   ]
 end
 ```
