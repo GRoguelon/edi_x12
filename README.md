@@ -1,6 +1,17 @@
 # EDI X12
 
-An Elixir parser for EDI X12.
+A robust Elixir parser for EDI X12 (Electronic Data Interchange) documents, with built-in support for HIPAA 5010 transaction sets.
+
+## Overview
+
+EDI X12 is the standard format for electronic business documents in North America, widely used in healthcare, finance, logistics, and other industries. This library provides a native Elixir implementation for parsing and working with X12 documents, starting with HIPAA-compliant healthcare transactions.
+
+### Features
+
+- 🏥 **HIPAA 5010 Support** - Parse healthcare transaction sets including eligibility, claims, and remittance
+- 🔍 **Flexible Parsing** - Parse complete transaction sets, individual segments, or custom combinations
+- 🎯 **Type-Safe** - Structured data types for segments and transaction sets
+- ⚡ **Elixir Native** - Built from the ground up in Elixir for performance and reliability
 
 > [!WARNING]
 > This library is **not production-ready** yet. Use at your own risk.
