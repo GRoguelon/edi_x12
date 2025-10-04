@@ -1,9 +1,11 @@
 # Changelog
 
-## v0.1.2 (Unreleased)
+## v0.1.2 (2025-10-03)
 
 ### Bug fixes
 
+* Added missing envelope around the transaction set (`ISA`, `GS`, `GE` and `IEA`)
+* Removed empty list when the segment is not present
 * Removed `IO.inspect/1` from the code
 * Fix Dialyzer errors
 
